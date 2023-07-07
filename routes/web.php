@@ -30,3 +30,23 @@ Route::post('/product/save', [ProductController::class, 'saveNew']);
 
 // belajar route dengan controller
 Route::get("/pintu-masuk", [TestController::class, 'pintuMasuk']);
+
+Route::post("/pintu-masuk", [TestController::class, 'pintuMasuk']);
+
+// route group
+Route::group(["prefix"=>"/products"], function(){ 
+    Route::get("/all", [ProductController::class, "all"]); 
+    Route::get("/bag", [ProductController::class, "bag"]); 
+    Route::get("/latest", [ProductController::class, "latest"]); 
+    Route::get("/discounts", [ProductController::class, "discounts"]); 
+});
+
+// route group menggunakan middleware
+Route::group(["prefix"=>"admin", "middleware"=>"mustAdmin"], function(){ 
+    Route::get("/dashboard", [DashboardController::class, "index"]); 
+    Route::get("/orders", [DashboardController::class, "index"]); 
+// definisi route lainnya di sini 
+}); 
+
+// route view. tanpa controller
+Route::view("/path", "welcome.view");
